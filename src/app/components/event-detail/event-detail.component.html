@@ -1,0 +1,27 @@
+<div class="container mt-5">
+  <form [formGroup]="eventForm" (ngSubmit)="updateEvent()">
+    <label for="label">Nom de l'événement</label>
+    <input id="label" formControlName="label">
+    <div *ngIf="eventForm.get('label')?.invalid && eventForm.get('label')?.touched">
+      Nom invalide
+    </div>
+  
+    <label for="startDate">Date de début</label>
+    <input id="startDate" formControlName="startDate" type="date">
+    <div *ngIf="eventForm.get('startDate')?.invalid && eventForm.get('startDate')?.touched">
+      Date de début invalide
+    </div>
+  
+    <label for="endDate">Date de fin</label>
+    <input id="endDate" formControlName="endDate" type="date">
+    <div *ngIf="eventForm.get('endDate')?.invalid && eventForm.get('endDate')?.touched">
+      Date de fin invalide
+    </div>
+  
+    <button type="submit">Mettre à jour</button>
+  </form>
+</div>
+
+
+
+

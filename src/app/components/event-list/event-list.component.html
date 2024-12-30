@@ -1,0 +1,15 @@
+<div class="container mt-3">
+    <h2>Liste des Événements</h2>
+    <div class="list-group">
+        <a *ngFor="let event of events" [routerLink]="['/events', event.id]" class="list-group-item">
+            <h5>{{ event.name }}</h5>
+            <p>Du {{ event.startDate }} au {{ event.endDate }}</p>
+            <p>Artistes: {{ event.artists.length }}</p>
+            <button [routerLink]="['/events', event.id]">Détails</button>
+        </a>
+    </div>
+    <div class="d-flex justify-content-between mt-3">
+        <button class="btn btn-primary" (click)="previousPage()">Précédent</button>
+        <button class="btn btn-primary" (click)="nextPage()">Suivant</button>
+    </div>
+</div>

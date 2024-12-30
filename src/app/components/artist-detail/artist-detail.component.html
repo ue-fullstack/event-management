@@ -1,0 +1,15 @@
+<form [formGroup]="artistForm" (ngSubmit)="updateArtist()">
+  <label for="label">Nom de l'artiste</label>
+  <input id="label" formControlName="label">
+  <div *ngIf="artistForm.get('label')?.invalid && artistForm.get('label')?.touched">
+    Nom invalide
+  </div>
+
+  <label for="genre">Genre musical</label>
+  <input id="genre" formControlName="genre">
+  <div *ngIf="artistForm.get('genre')?.invalid && artistForm.get('genre')?.touched">
+    Genre invalide
+  </div>
+
+  <button type="submit">Mettre à jour</button>
+</form>

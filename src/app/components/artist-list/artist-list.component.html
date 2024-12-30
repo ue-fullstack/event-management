@@ -1,0 +1,9 @@
+<div *ngFor="let artist of artists">
+  <h2>{{ artist.label }}</h2>
+  <p>Genre: {{ artist.genre }}</p>
+  <p>Événements: {{ artist.events.length }}</p>
+  <button [routerLink]="['/artists', artist.id]">Détails</button>
+</div>
+<button (click)="previousPage()" [disabled]="page === 0">Précédent</button>
+<button (click)="nextPage()" [disabled]="page >= totalPages - 1">Suivant</button>
+
