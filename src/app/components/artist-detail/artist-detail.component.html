@@ -1,15 +1,21 @@
-<form [formGroup]="artistForm" (ngSubmit)="updateArtist()">
-  <label for="label">Nom de l'artiste</label>
-  <input id="label" formControlName="label">
-  <div *ngIf="artistForm.get('label')?.invalid && artistForm.get('label')?.touched">
-    Nom invalide
-  </div>
+<div class="container mt-3">
+  <div class="card">
+    <div class="card-header"><h3>Mettre à jour un artiste</h3></div>
+    <div class="card-body">
+      <form [formGroup]="artistForm" (ngSubmit)="updateArtist()">
+    <label for="label">Nom de l'artiste</label>
+    <input id="label" formControlName="label" class="form-control">
+    <div *ngIf="artistForm.get('label')?.invalid && artistForm.get('label')?.touched">
+      Nom invalide
+    </div>
 
-  <label for="genre">Genre musical</label>
-  <input id="genre" formControlName="genre">
-  <div *ngIf="artistForm.get('genre')?.invalid && artistForm.get('genre')?.touched">
-    Genre invalide
+    <div class="mt-2">
+       <button class="btn btn-success" type="submit">Mettre à jour</button>
+    </div>
+   
+  </form>
+    </div>
   </div>
+  
+</div>
 
-  <button type="submit">Mettre à jour</button>
-</form>

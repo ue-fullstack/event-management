@@ -21,11 +21,11 @@ export interface Sort {
   }
   
   export interface Event {
-    id: string;
-    label: string;
-    startDate: string;
-    endDate: string;
-    artists: Artist[];
+    id?: string;
+    label?: string;
+    startDate?: string;
+    endDate?: string;
+    artists?: Artist[];
   }
   
   export interface ApiResponse {

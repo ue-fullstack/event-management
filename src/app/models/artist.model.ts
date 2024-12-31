@@ -3,7 +3,6 @@ import { Pageable, Sort } from "./event.model";
 export interface Artist {
     id: string;
     label: string;
-    genre: string;
     events: Event[];
   }
   

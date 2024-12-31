@@ -2,14 +2,16 @@
     <h2>Liste des Événements</h2>
     <div class="list-group">
         <a *ngFor="let event of events" [routerLink]="['/events', event.id]" class="list-group-item">
-            <h5>{{ event.name }}</h5>
+            <h5>{{ event.label }}</h5>
             <p>Du {{ event.startDate }} au {{ event.endDate }}</p>
-            <p>Artistes: {{ event.artists.length }}</p>
-            <button [routerLink]="['/events', event.id]">Détails</button>
+            <p>Artistes associés: {{ event.artists.length }}</p>
+            <button class="btn btn-info" (click)="onDetail(event.id)">Détails</button>
+            <button class="btn btn-warning m-2" (click)="onAssocierArtist(event.id)">Associer un artiste</button>
+            <button class="btn btn-danger" (click)="deleteEvent(event.id)">Supprimer</button>
         </a>
     </div>
     <div class="d-flex justify-content-between mt-3">
-        <button class="btn btn-primary" (click)="previousPage()">Précédent</button>
-        <button class="btn btn-primary" (click)="nextPage()">Suivant</button>
+        <button class="btn btn-primary" (click)="previousPage()"  [disabled]="page === 0">Précédent</button>
+        <button class="btn btn-primary" (click)="nextPage()" [disabled]="page >= totalPages - 1">Suivant</button>
     </div>
 </div>

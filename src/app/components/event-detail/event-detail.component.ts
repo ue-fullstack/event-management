@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { EventService } from '../../services/event.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -8,6 +8,7 @@ import { Event } from '../../models/event.model';
 
 @Component({
   selector: 'app-event-detail',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './event-detail.component.html',
   styleUrl: './event-detail.component.css'

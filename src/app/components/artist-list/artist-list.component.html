@@ -1,9 +1,28 @@
-<div *ngFor="let artist of artists">
-  <h2>{{ artist.label }}</h2>
-  <p>Genre: {{ artist.genre }}</p>
-  <p>Événements: {{ artist.events.length }}</p>
-  <button [routerLink]="['/artists', artist.id]">Détails</button>
+<div class="container mt-3">
+  <h2>Liste des Artistes</h2>
+  <div class="list-group">
+    <div *ngFor="let artist of artists" class="list-group-item">
+      <h2>{{ artist.label }}</h2>
+      <p>Événements: {{ artist.events.length }}</p>
+      <button class="btn btn-info" (click)="onDetail(artist.id)">Détails</button>
+      <button class="btn btn-danger m-2" (click)="deleteArtist(artist.id)">Supprimer</button>
+      <button class="btn btn-primary m-2" (click)="showEvents(artist.id)">Voir les événements</button>
+      
+      <div *ngIf="selectedArtistId === artist.id">
+        <h3>Événements de {{ artist.label }}</h3>
+        <ul *ngIf="selectedArtistEvents.length > 0; else noEvents">
+          <li *ngFor="let event of selectedArtistEvents">
+            {{ event.label }} - Du {{ event.startDate | date }} au {{ event.endDate | date }}
+          </li>
+        </ul>
+        <ng-template #noEvents>
+          <p>Aucun événement pour cet artiste.</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-between mt-3">
+    <button class="btn btn-primary" (click)="previousPage()" [disabled]="page === 0">Précédent</button>
+    <button class="btn btn-primary" (click)="nextPage()" [disabled]="page >= totalPages - 1">Suivant</button>
+  </div>
 </div>
-<button (click)="previousPage()" [disabled]="page === 0">Précédent</button>
-<button (click)="nextPage()" [disabled]="page >= totalPages - 1">Suivant</button>
-

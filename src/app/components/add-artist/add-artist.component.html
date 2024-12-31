@@ -1,0 +1,20 @@
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-header"><h3>Ajouter un Artiste</h3></div>
+        <div class="card-body">
+            <form [formGroup]="addArtistForm" (ngSubmit)="addArtist()">
+      <div class="mb-3">
+        <label for="artistName" class="form-label">Label</label>
+        <input id="artistName" formControlName="label" type="text" class="form-control">
+        <div *ngIf="addArtistForm.get('label')?.invalid && addArtistForm.get('label')?.touched" class="text-danger">
+          Le nom doit comporter au moins 3 caractères.
+        </div>
+      </div>
+     
+      <button type="submit" class="btn btn-primary">Ajouter</button>
+    </form>
+    
+        </div>
+    </div>
+    
+</div>

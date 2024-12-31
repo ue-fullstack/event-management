@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ArtistService } from '../../services/artist.service';
 import { CommonModule } from '@angular/common';
 import { Artist } from '../../models/artist.model';
@@ -21,13 +21,12 @@ export class ArtistDetailComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.artistForm = this.fb.group({
-      label: ['', [Validators.required, Validators.minLength(3)]],
-      genre: ['', Validators.required]
+      label: ['', [Validators.required, Validators.minLength(3)]]
     });
   }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('artistId');
     if (id) {
       this.artistService.getArtist(id).subscribe(data => {
         this.artist = data;
@@ -40,10 +39,10 @@ export class ArtistDetailComponent implements OnInit {
 
   updateArtist(): void {
     if (this.artistForm.valid) {
-      const id = this.route.snapshot.paramMap.get('id');
+      const id = this.route.snapshot.paramMap.get('artistId');
       if (id) {
         this.artistService.updateArtist(id, this.artistForm.value).subscribe(() => {
-          // Handle success
+          alert("Mise ajout avec success!")
         });
       } else {
         console.error('ID de l\'artiste est null');

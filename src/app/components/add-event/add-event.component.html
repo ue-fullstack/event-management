@@ -1,0 +1,55 @@
+<div class="container mt-3">
+<div class="card">
+    <div class="card-header"><h3>Ajouter un Événement</h3></div>
+    <div class="card-body">
+        <form [formGroup]="addEventForm" (ngSubmit)="addEvent()">
+            <div class="mb-3">
+              <label for="label" class="form-label">Nom de l'Événement</label>
+              <input id="label" formControlName="label" type="text" class="form-control">
+              <div *ngIf="addEventForm.get('label')?.invalid && addEventForm.get('label')?.touched" class="text-danger">
+                Le nom doit comporter au moins 3 caractères.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="startDate" class="form-label">Date de Début</label>
+              <input id="startDate" formControlName="startDate" type="date" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="endDate" class="form-label">Date de Fin</label>
+              <input id="endDate" formControlName="endDate" type="date" class="form-control">
+            </div>
+          
+            <div class="mb-3">
+              <label for="artists" class="form-label">Associer des Artistes</label>
+              <div *ngFor="let artist of artists">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [value]="artist"
+                    (change)="addArtist(artist)"
+                  >
+                  <label class="form-check-label">{{ artist.label }}</label>
+                </div>
+              </div>
+            </div>
+          
+            <div class="mb-3">
+              <h5>Artistes Sélectionnés :</h5>
+              <ul class="list-group">
+                <li *ngFor="let artist of selectedArtistsArray.controls; let i = index" class="list-group-item">
+                  {{ artist.value.label }}
+                  <button type="button" class="btn btn-danger btn-sm float-end" (click)="removeArtist(i)">Supprimer</button>
+                </li>
+              </ul>
+            </div>
+          
+            <button type="submit" class="btn btn-primary">Ajouter l'Événement</button>
+          </form>
+    </div>
+</div>
+</div>
+
+
+
+

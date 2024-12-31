@@ -1,0 +1,22 @@
+<div class="container mt-5">
+    <h2>Associer un Artiste à un Événement</h2>
+  
+    <div class="mb-3">
+      <label for="event" class="form-label">Événement Sélectionné</label>
+      <select id="event" class="form-select" [(ngModel)]="selectedEventId" [disabled]="!!selectedEventId">
+        <option *ngFor="let event of events" [value]="event.id" [selected]="event.id === selectedEventId">
+          {{ event.label }}
+        </option>
+      </select>
+    </div>
+  
+    <div class="mb-3">
+      <label for="artist" class="form-label">Sélectionnez un Artiste</label>
+      <select id="artist" class="form-select" [(ngModel)]="selectedArtistId">
+        <option *ngFor="let artist of artists" [value]="artist.id">{{ artist.label }}</option>
+      </select>
+    </div>
+  
+    <button class="btn btn-primary" (click)="associateArtistToEvent()">Associer</button>
+  </div>
+  
