@@ -21,6 +21,7 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
+              "src/assets",
               {
                 "glob": "**/*",
                 "input": "public"
@@ -29,9 +30,23 @@
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "@angular/material/prebuilt-themes/cyan-orange.css",
+              "src/assets/plugins/font-awsome/css/font-awesome.min.css",
+              "src/assets/plugins/magnific-popup/magnific-popup.css",
+              "src/assets/plugins/slick/slick.css",
+              "src/assets/plugins/slick/slick-theme.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/plugins/jquery/jquery.js",
+              "src/assets/plugins/popper/popper.min.js",
+              "src/assets/plugins/bootstrap/js/bootstrap.min.js",
+              "src/assets/plugins/smoothscroll/SmoothScroll.min.js",
+              "src/assets/plugins/isotope/mixitup.min.js",
+              "src/assets/plugins/magnific-popup/jquery.magnific-popup.min.js",
+              "src/assets/plugins/slick/slick.min.js",
+              "src/assets/plugins/syotimer/jquery.syotimer.min.js",
+              "src/assets/js/custom.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -81,6 +96,7 @@
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
+              "src/assets",
               {
                 "glob": "**/*",
                 "input": "public"
@@ -95,5 +111,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "cbb18b2e-0364-405c-9c79-176747b6f7d5"
   }
 }

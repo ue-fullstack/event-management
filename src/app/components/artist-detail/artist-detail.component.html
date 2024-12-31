@@ -1,15 +1,75 @@
-<form [formGroup]="artistForm" (ngSubmit)="updateArtist()">
-  <label for="label">Nom de l'artiste</label>
-  <input id="label" formControlName="label">
-  <div *ngIf="artistForm.get('label')?.invalid && artistForm.get('label')?.touched">
-    Nom invalide
+<section class="page-title bg-title overlay-dark">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <div class="title">
+          <h3>{{ "Nom" }}</h3>
+        </div>
+        <ol class="breadcrumb p-0 m-0">
+          <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+          <li class="breadcrumb-item active">{{ "Nom" }}</li>
+        </ol>
+      </div>
+    </div>
   </div>
+</section>
 
-  <label for="genre">Genre musical</label>
-  <input id="genre" formControlName="genre">
-  <div *ngIf="artistForm.get('genre')?.invalid && artistForm.get('genre')?.touched">
-    Genre invalide
+<section class="section single-speaker">
+  <div class="container">
+    <div class="block">
+      <div class="row">
+        <div class="col-lg-5 col-md-6 align-self-md-center">
+          <div class="image-block">
+            <img src="" class="img-fluid" alt="artist">
+          </div>
+        </div>
+        <div class="col-lg-7 col-md-6 align-self-center">
+          <div class="content-block">
+            <div class="name">
+              <h3>{{ "Nom" }}</h3>
+            </div>
+            <div class="profession">
+              <p>{{ "Profession" }}</p>
+            </div>
+            <div class="details">
+              <p>{{ "Description" }}</p>
+            </div>
+            <div class="social-profiles">
+              <h5>Social Profiles</h5>
+              <ul class="list-inline social-list">
+<!--                <li class="list-inline-item" *ngFor="let link of artist.socialLinks">-->
+<!--                  <a [href]="link.url" target="_blank"><i [class]="link.icon"></i></a>-->
+<!--                </li>-->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="block-2">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="personal-info">
+            <h5>Personal Information</h5>
+            <p>{{ "Infos personnels" }}</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="skills">
+            <h5>Skills</h5>
+            <div class="skill-bars">
+<!--              <div class="skill-bar" *ngFor="let skill of artist.skills">-->
+<!--                <p>{{ skill.name }}</p>-->
+<!--                <div class="progress">-->
+<!--                  <div class="progress-bar" role="progressbar" [style.width]="skill.level + '%'">-->
+<!--                    <span>{{ skill.level }}%</span>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <button type="submit">Mettre à jour</button>
-</form>
+</section>

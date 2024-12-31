@@ -11,30 +11,66 @@ import { RouterLink } from '@angular/router';
 })
 export class EventListComponent implements OnInit {
   events: any[] = [];
-  page: number = 0;
-  size: number = 10;
+  currentPage: number = 1;
+  totalPages: number = 1;
+  pages: number[] = [];
 
-  constructor(private eventService: EventService) { }
-
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadEvents();
   }
 
-  loadEvents(): void {
-    this.eventService.getEvents(this.page, this.size).subscribe(data => {
-      this.events = data.content;
-    });
+  loadEvents() {
+    this.events = [
+      {
+        id: '1',
+        label: 'Concert 1',
+        startDate: '2024-01-01',
+        endDate: '2024-01-02',
+        artists: [
+          { name: 'Artist 1' },
+          { name: 'Artist 2' }
+        ]
+      },
+      {
+        id: '2',
+        label: 'Concert 2',
+        startDate: '2024-02-01',
+        endDate: '2024-02-02',
+        artists: [
+          { name: 'Artist 3' },
+          { name: 'Artist 4' }
+        ]
+      },
+      // Ajout d'un événement par défaut
+      {
+        id: 'default',
+        label: 'Default Event',
+        startDate: '2024-01-15',
+        endDate: '2024-01-16',
+        artists: [
+          { name: 'Default Artist 1' },
+          { name: 'Default Artist 2' }
+        ]
+      }
+    ];
   }
 
-  nextPage(): void {
-    this.page++;
-    this.loadEvents();
-  }
-
-  previousPage(): void {
-    if (this.page > 0) {
-      this.page--;
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
       this.loadEvents();
     }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.loadEvents();
+    }
+  }
+
+  goToPage(page: number) {
+    this.currentPage = page;
+    this.loadEvents();
   }
 }
