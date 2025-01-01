@@ -1,95 +1,169 @@
-<!-- Page Title Section -->
-<section class="page-title bg-title overlay-dark">
+<section class="event-details section mt-1">
   <div class="container">
     <div class="row">
-      <div class="col-12 text-center">
-        <div class="title">
-          <h3>Event Details</h3>
+      <div class="col-12">
+        <div class="section-title">
+          <h3>
+            Detail de <span class="alternate">{{ event?.label }}</span>
+          </h3>
         </div>
-        <ol class="breadcrumb p-0 m-0">
-          <li class="breadcrumb-item"><a href="/">Home</a></li>
-          <li class="breadcrumb-item active">Event Details</li>
-        </ol>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- Event Details Section -->
-<section class="event-details section">
-  <div class="container">
-    <div class="row mt-30">
-      <div class="col-lg-8 col-md-10 mx-auto">
+    <div class="row">
+      <!-- Colonne pour les informations de l'événement -->
+      <div class="col-lg-6">
         <div class="block">
-          <!-- Event Information -->
           <article class="event-post single">
             <div class="post-thumb">
-              <img [src]="event.image" alt="event-image" class="img-fluid">
+              <img
+                src="https://picsum.photos/400/200"
+                alt="event-image"
+                class="img-fluid"
+              />
             </div>
             <div class="post-content">
               <div class="date">
-                <h4>{{ event.label }} <span>{{ event.startDate | date: 'dd MMM yyyy' }} - {{ event.endDate | date: 'dd MMM yyyy' }}</span></h4>
+                <h5>
+                  Date:
+                  <span
+                    >du {{ event?.startDate | date : "dd MMM yyyy" }} - au
+                    {{ event?.endDate | date : "dd MMM yyyy" }}</span
+                  >
+                </h5>
               </div>
               <div class="post-title">
-                <h3>{{ event.label }}</h3>
+                <h5>Label: {{ event?.label }}</h5>
               </div>
-              <div class="post-meta">
-                <ul class="list-inline">
-                  <li class="list-inline-item"><strong>Artists:</strong>
-                    <ul>
-                      <li *ngFor="let artist of event.artists">{{ artist.name }}</li>
-                    </ul>
-                  </li>
-                </ul>
+
+              <div class="card col-8">
+                <div class="card-header" id="headingOne">
+                  <h5 class="mb-0">
+                    <a data-toggle="collapse" href="#collapseSix">
+                      <span class="fa fa-plus-circle"></span> ({{event?.artists?.length}}) artistes
+                      associés 
+                    </a>
+                  </h5>
+                </div>
+                <div
+                  id="collapseSix"
+                  class="collapse"
+                  data-parent="#accordionTwo"
+                >
+                  <div class="card-body">
+                    <ng-container
+                      *ngIf="
+                        event && event.artists && event.artists.length > 0;
+                        else noArtists
+                      "
+                    >
+                      <ul class="list-group">
+                        <li
+                          *ngFor="let artist of event.artists"
+                          class="list-group-item d-flex justify-content-between align-items-center"
+                        >
+                          {{ artist.label }}
+                          <button
+                            class="btn btn-danger btn-sm"
+                            (click)="dissociateArtistToEvent(artist.id)"
+                          >
+                            <i class="fa fa-times"></i> Dissocier
+                          </button>
+                        </li>
+                      </ul>
+                    </ng-container>
+                    <ng-template #noArtists>
+                      <p>
+                        Aucun artiste n'est associé à cet événement pour le
+                        moment.
+                      </p>
+                    </ng-template>
+                  </div>
+                </div>
               </div>
+              
             </div>
           </article>
+        </div>
+      </div>
 
-          <!-- Edit Event Form -->
+      <!-- Colonne pour le formulaire d'édition -->
+      <div class="col-lg-6">
+        <div class="block">
           <div class="edit-event-form">
             <h5>Edit Event</h5>
             <form [formGroup]="eventForm" (ngSubmit)="updateEvent()">
-              <label for="label">Event Name</label>
-              <input id="label" formControlName="label">
-              <div *ngIf="eventForm.get('label')?.invalid && eventForm.get('label')?.touched">
-                <small class="error">Name is required and must be at least 3 characters long</small>
+              <div class="form-group">
+                <label for="label">Event Name</label>
+                <input
+                  id="label"
+                  formControlName="label"
+                  class="form-control"
+                />
+                <div
+                  *ngIf="
+                    eventForm.get('label')?.invalid &&
+                    eventForm.get('label')?.touched
+                  "
+                >
+                  <small class="text-danger"
+                    >Name is required and must be at least 3 characters
+                    long</small
+                  >
+                </div>
               </div>
 
-              <label for="startDate">Start Date</label>
-              <input id="startDate" formControlName="startDate" type="date">
-              <div *ngIf="eventForm.get('startDate')?.invalid && eventForm.get('startDate')?.touched">
-                <small class="error">Start date must be in the future</small>
+              <div class="form-group">
+                <label for="startDate">Start Date</label>
+                <input
+                  id="startDate"
+                  formControlName="startDate"
+                  type="date"
+                  class="form-control"
+                />
+                <div
+                  *ngIf="
+                    eventForm.get('startDate')?.invalid &&
+                    eventForm.get('startDate')?.touched
+                  "
+                >
+                  <small class="text-danger"
+                    >Start date must be in the future</small
+                  >
+                </div>
               </div>
 
-              <label for="endDate">End Date</label>
-              <input id="endDate" formControlName="endDate" type="date">
-              <div *ngIf="eventForm.get('endDate')?.invalid && eventForm.get('endDate')?.touched">
-                <small class="error">End date must be after the start date</small>
+              <div class="form-group">
+                <label for="endDate">End Date</label>
+                <input
+                  id="endDate"
+                  formControlName="endDate"
+                  type="date"
+                  class="form-control"
+                />
+                <div
+                  *ngIf="
+                    eventForm.get('endDate')?.invalid &&
+                    eventForm.get('endDate')?.touched
+                  "
+                >
+                  <small class="text-danger"
+                    >End date must be after the start date</small
+                  >
+                </div>
               </div>
 
-              <button type="submit" [disabled]="eventForm.invalid">Update Event</button>
+              <button
+                type="submit"
+                [disabled]="eventForm.invalid"
+                class="btn btn-success m-2"
+                (click)="updateEvent()"
+              >
+                Update Event
+              </button>
             </form>
-          </div>
-
-          <!-- Add or Remove Artists -->
-          <div class="artists-management">
-            <h5>Manage Artists</h5>
-            <form (ngSubmit)="addArtistToEvent()">
-              <label for="artist">Add Artist</label>
-              <input id="artist" [(ngModel)]="newArtistName" name="artist" placeholder="Artist name">
-              <button type="submit" [disabled]="!newArtistName">Add Artist</button>
-            </form>
-            <div class="artist-list">
-              <ul>
-                <li *ngFor="let artist of event.artists">
-                  {{ artist.name }} <button (click)="removeArtistFromEvent(artist)">Remove</button>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-

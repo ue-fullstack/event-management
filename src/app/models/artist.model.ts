@@ -1,10 +1,9 @@
-import { Pageable, Sort } from "./event.model";
+import { Event, Pageable, Sort } from "./event.model";
 
 export interface Artist {
     id: string;
     label: string;
-    genre: string;
-    events: Event[];
+    events?: Event[];
   }
   
   export interface ApiResponseArtist {

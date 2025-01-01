@@ -1,51 +1,101 @@
-<section class="events section">
+<section class="news section mt-1">
   <div class="container">
-    <h2 class="mb-4">Liste des Événements</h2>
     <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-        <div class="block">
-          <div class="row">
-            <div class="col-md-6 col-sm-12 mb-4" *ngFor="let event of events">
-              <div class="event-post">
-                <div class="post-content">
-                  <div class="post-title">
-                    <h3><a [routerLink]="['/events', event.id]">{{ event.label }}</a></h3>
-                  </div>
-                  <div class="post-meta">
-                    <ul class="list-inline">
-                      <li class="list-inline-item">
-                        <i class="fa fa-calendar"></i> Du {{ event.startDate | date:'dd/MM/yyyy' }} au {{ event.endDate | date:'dd/MM/yyyy' }}
-                      </li>
-                      <li class="list-inline-item">
-                        <i class="fa fa-music"></i> {{ event.artists.length }} artistes
-                      </li>
-                    </ul>
-                  </div>
-                  <p class="event-preview">{{ event.description | slice:0:100 }}...</p>
-                  <a [routerLink]="['/events', event.id]" class="btn btn-main">Détails</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-              <li class="page-item" [class.disabled]="currentPage === 1">
-                <a class="page-link" (click)="previousPage()" aria-label="Précédent">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-              <li class="page-item" *ngFor="let page of pages" [class.active]="page === currentPage">
-                <a class="page-link" (click)="goToPage(page)">{{ page }}</a>
-              </li>
-              <li class="page-item" [class.disabled]="currentPage === totalPages">
-                <a class="page-link" (click)="nextPage()" aria-label="Suivant">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
+      <div class="col-12">
+        <div class="section-title">
+          <h3>Liste <span class="alternate">des événements</span></h3>
         </div>
       </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col-md-6 offset-md-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Rechercher un événement"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="searchEvents()"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="col-lg-4 col-md-6 col-sm-8 col-10 m-auto"
+        *ngFor="let event of filteredEvents"
+      >
+        <div class="blog-post">
+          <div class="post-thumb">
+            <a [routerLink]="['/events', event.id]">
+              <img
+                src="https://picsum.photos/400/200"
+                alt="post-image"
+                class="img-fluid"
+              />
+            </a>
+          </div>
+          <div class="post-content">
+            <div class="date">
+              <div class="start-date">
+                Du
+                <h4>
+                  {{ event.startDate | date : "dd"
+                  }}<span>{{ event.startDate | date : "MMM yyyy" }}</span>
+                </h4>
+              </div>
+              <div class="end-date">
+                Au
+                <h4>
+                  {{ event.endDate | date : "dd"
+                  }}<span>{{ event.endDate | date : "MMM yyyy" }}</span>
+                </h4>
+              </div>
+            </div>
+            <div class="post-title">
+              <h2>
+                <a [routerLink]="['/events', event.id]">{{ event.label }}</a>
+              </h2>
+            </div>
+            <div class="post-meta">
+              <ul class="list-inline">
+                <li class="list-inline-item">
+                  <i class="fa fa-heart-o"></i>
+                  <a>0</a>
+                </li>
+                <li class="list-inline-item">
+                  <i class="fa fa-music"></i>
+                  <a>{{ event.artists.length }}</a>
+                </li>
+                <li class="list-inline-item">
+                  <i class="fa fa-link"></i>
+                  <a [routerLink]="['/associerArtist', event.id]">Asscoier</a>
+                </li>
+				<li class="list-inline-item">
+					<i class="fa fa-trash-o"></i>
+					<a style="cursor: pointer;" (click)="deleteEvent(event.id)">Supprimer</a>
+				</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a
+              class="page-link"
+              (click)="previousPage()"
+              aria-label="Précédent"
+            >
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link" (click)="nextPage()" aria-label="Suivant">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </section>

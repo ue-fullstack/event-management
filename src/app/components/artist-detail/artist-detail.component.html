@@ -1,71 +1,44 @@
-<section class="page-title bg-title overlay-dark">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 text-center">
-        <div class="title">
-          <h3>{{ "Nom" }}</h3>
-        </div>
-        <ol class="breadcrumb p-0 m-0">
-          <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
-          <li class="breadcrumb-item active">{{ "Nom" }}</li>
-        </ol>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section class="section single-speaker">
   <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="section-title">
+          <h3>
+            Detail d'un <span class="alternate">Artiste</span>
+          </h3>
+        </div>
+      </div>
+    </div>
     <div class="block">
       <div class="row">
-        <div class="col-lg-5 col-md-6 align-self-md-center">
+        <div class="col-lg-3 col-md-4 align-self-md-center">
           <div class="image-block">
-            <img src="" class="img-fluid" alt="artist">
+            <img src="https://picsum.photos/300/300" class="img-fluid" alt="artist">
           </div>
         </div>
-        <div class="col-lg-7 col-md-6 align-self-center">
+        <div class="col-lg-6 col-md-6 align-self-center">
           <div class="content-block">
-            <div class="name">
-              <h3>{{ "Nom" }}</h3>
-            </div>
-            <div class="profession">
-              <p>{{ "Profession" }}</p>
-            </div>
-            <div class="details">
-              <p>{{ "Description" }}</p>
-            </div>
-            <div class="social-profiles">
-              <h5>Social Profiles</h5>
-              <ul class="list-inline social-list">
-<!--                <li class="list-inline-item" *ngFor="let link of artist.socialLinks">-->
-<!--                  <a [href]="link.url" target="_blank"><i [class]="link.icon"></i></a>-->
-<!--                </li>-->
-              </ul>
-            </div>
+            <form [formGroup]="artistForm" (ngSubmit)="updateArtist()">
+              <div class="name">
+                <h3>
+                  <input formControlName="label" class="form-control">
+                </h3>
+              </div>
+              <button type="submit" class="btn btn-primary mt-3" [disabled]="artistForm.invalid">Mettre à jour</button>
+            </form>
           </div>
         </div>
       </div>
     </div>
-    <div class="block-2">
+    <div class="block-2 mt-2">
+      <h3>Événements associés</h3>
       <div class="row">
-        <div class="col-md-6">
-          <div class="personal-info">
-            <h5>Personal Information</h5>
-            <p>{{ "Infos personnels" }}</p>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="skills">
-            <h5>Skills</h5>
-            <div class="skill-bars">
-<!--              <div class="skill-bar" *ngFor="let skill of artist.skills">-->
-<!--                <p>{{ skill.name }}</p>-->
-<!--                <div class="progress">-->
-<!--                  <div class="progress-bar" role="progressbar" [style.width]="skill.level + '%'">-->
-<!--                    <span>{{ skill.level }}%</span>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
+        <div class="col-md-4" *ngFor="let event of events">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">{{ event.label }}</h5>
+              <p class="card-text">Du {{ event.startDate | date:"dd MMM yyyy" }} au {{ event.endDate | date:"dd MMM yyyy" }}</p>
+              <a [routerLink]="['/events', event.id]" class="btn btn-primary">Voir détails</a>
             </div>
           </div>
         </div>

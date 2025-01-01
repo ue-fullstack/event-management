@@ -1,0 +1,40 @@
+<section class="news section mt-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="section-title">
+          <h3>Ajouter <span class="alternate">un Artiste</span></h3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-8 col-10 m-auto">
+        <form [formGroup]="addArtistForm" (ngSubmit)="addArtist()">
+          <div class="mb-3">
+            <label for="artistName" class="form-label">Label</label>
+            <input
+              id="artistName"
+              formControlName="label"
+              type="text"
+              class="form-control"
+            />
+            <div
+              *ngIf="
+                addArtistForm.get('label')?.invalid &&
+                addArtistForm.get('label')?.touched
+              "
+              class="text-danger"
+            >
+              Le nom doit comporter au moins 3 caractères.
+            </div>
+            <div *ngIf="labelExists && addArtistForm.get('label')?.touched" class="text-danger">
+				Cet artiste existe déjà.
+			  </div>			  
+          </div>
+
+          <button type="submit" class="btn btn-primary">Ajouter</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

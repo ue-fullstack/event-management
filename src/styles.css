@@ -2789,30 +2789,45 @@ select.form-control:not([size]):not([multiple]) {
   position: absolute;
   top: -32px;
   left: 30px;
-  width: 65px;
+  width: 130px; /* Augmenté pour accueillir deux dates */
   height: 65px;
   text-align: center;
   background: #ff6600;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
+  justify-content: space-around; /* Pour espacer les deux dates */
+}
+
+.news .blog-post .post-content .date .start-date,
+.news .blog-post .post-content .date .end-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
 }
 
 .news .blog-post .post-content .date h4 {
   color: #fff;
+  margin: 0;
+  font-size: 1.2rem; /* Ajusté pour un meilleur ajustement */
 }
 
 .news .blog-post .post-content .date h4 span {
   display: block;
-  font-size: 1rem;
+  font-size: 0.8rem; /* Réduit pour un meilleur ajustement */
   font-weight: 400;
 }
+
+.news .blog-post .post-content .date::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 52%;
+  width: 2px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
 
 .news .blog-post .post-content .post-title {
   padding-bottom: 5px;

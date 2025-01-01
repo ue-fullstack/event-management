@@ -1,80 +1,101 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ArtistService } from '../../services/artist.service';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ApiResponseArtist, Artist } from '../../models/artist.model';
-import {FormsModule} from '@angular/forms';
+import { forkJoin } from 'rxjs';
+import { Event } from '../../models/event.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-artist-list',
+  standalone: true,
   imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './artist-list.component.html',
-  styleUrl: './artist-list.component.css'
+  styleUrls: ['./artist-list.component.css']
 })
 export class ArtistListComponent implements OnInit {
-  artists: any[] = []; // Liste complète des artistes
-  displayedArtists: any[] = []; // Liste filtrée et paginée
-  searchTerm: string = ''; // Texte de recherche
-  currentPage: number = 1; // Page actuelle
-  itemsPerPage: number = 10; // Nombre d'éléments par page
-  totalPages: number = 1; // Nombre total de pages
+  page: number = 0;
+  size: number = 3;
+  totalPages: number = 0;
+  route = inject(Router);
+  allArtists: (Artist & { showEvents?: boolean })[] = [];
+  filteredArtists: (Artist & { showEvents?: boolean })[] = [];
+  searchTerm: string = '';
 
-  constructor(private artistService: ArtistService) {}
+  constructor(private artistService: ArtistService) { }
 
   ngOnInit(): void {
-    this.artistService.getArtists(this.currentPage, this.itemsPerPage).subscribe((data) => {
-      // Ajout d'artistes fictifs
-      this.artists = [
-        {
-          id: 1,
-          name: 'John Doe',
-          events: ['Concert Paris', 'Festival Lyon', 'Exposition Bordeaux']
-        },
-        {
-          id: 2,
-          name: 'Jane Smith',
-          events: ['Conférence Marseille', 'Festival Nice']
-        },
-        {
-          id: 3,
-          name: 'Mike Johnson',
-          events: [] // Aucun événement
-        }
-      ];
-      this.calculatePagination();
+    this.loadArtists();
+  }
+
+  loadArtists(): void {
+    this.artistService.getArtists(this.page, this.size).subscribe((data: ApiResponseArtist) => {
+      this.allArtists = data.content.map(artist => ({ ...artist, showEvents: false }));
+      this.filteredArtists = [...this.allArtists];
+      this.totalPages = data.totalPages;
     });
   }
 
-  calculatePagination(): void {
-    this.totalPages = Math.ceil(this.artists.length / this.itemsPerPage);
-    this.updateDisplayedArtists();
+  searchArtists(): void {
+    this.filteredArtists = this.allArtists.filter(artist =>
+      artist.label.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 
-  updateDisplayedArtists(): void {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    this.displayedArtists = this.artists
-      .filter((artist) =>
-        artist.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-      )
-      .slice(startIndex, startIndex + this.itemsPerPage);
+  toggleEvents(artistId: string): void {
+    const artist = this.filteredArtists.find(a => a.id === artistId);
+    if (artist) {
+      artist.showEvents = !artist.showEvents;
+      if (artist.showEvents && !artist.events) {
+        this.loadEventsForArtist(artist);
+      }
+    }
   }
+  
 
-  filterArtists(): void {
-    this.currentPage = 1;
-    this.calculatePagination();
+  loadEventsForArtist(artist: Artist & { showEvents?: boolean }): void {
+    this.artistService.getEventForSpecificArtist(artist.id).subscribe(
+      events => {
+        artist.events = events;
+      },
+      error => {
+        console.error('Erreur lors du chargement des événements', error);
+      }
+    );
   }
 
   nextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.updateDisplayedArtists();
+    if (this.page < this.totalPages - 1) {
+      this.page++;
+      this.loadArtists();
     }
   }
 
   previousPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.updateDisplayedArtists();
+    if (this.page > 0) {
+      this.page--;
+      this.loadArtists();
     }
+  }
+
+  deleteArtist(id: string): void {
+    if(confirm('Êtes-vous sûr de vouloir supprimer cet artiste ?')) {
+      this.artistService.deleteArtist(id).subscribe(
+        () => {
+          this.allArtists = this.allArtists.filter(artist => artist.id !== id);
+          this.filteredArtists = this.filteredArtists.filter(artist => artist.id !== id);
+          alert("Artiste supprimé!");
+        },
+        error => {
+          console.error('Erreur lors de la suppression de l\'artiste', error);
+        }
+      );
+    }
+  }
+  
+
+  onDetail(artistId: string) {
+    this.route.navigate(['artists', artistId]);
   }
 }

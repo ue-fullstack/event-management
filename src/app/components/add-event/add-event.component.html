@@ -1,0 +1,43 @@
+<section class="news section mt-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="section-title">
+          <h3>Ajouter <span class="alternate">un événement</span></h3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-8 col-10 m-auto">
+        <form [formGroup]="addEventForm" (ngSubmit)="addEvent()">
+          <div class="mb-3">
+            <label for="label" class="form-label">Label de l'Événement</label>
+            <input id="label" formControlName="label" type="text" class="form-control">
+            <div *ngIf="addEventForm.get('label')?.invalid && addEventForm.get('label')?.touched" class="text-danger">
+              Le label doit comporter au moins 3 caractères.
+            </div>
+            <div *ngIf="labelExists && addEventForm.get('label')?.touched" class="text-danger">
+              Cet événement existe déjà.
+            </div>
+            
+          </div>
+          <div class="mb-3">
+            <label for="startDate" class="form-label">Date de Début</label>
+            <input id="startDate" formControlName="startDate" type="date" class="form-control">
+            <div *ngIf="addEventForm.get('startDate')?.errors?.['pastDate']" class="text-danger">
+              La date de début ne peut pas être dans le passé.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="endDate" class="form-label">Date de Fin</label>
+            <input id="endDate" formControlName="endDate" type="date" class="form-control">
+          </div>
+          <div *ngIf="addEventForm.hasError('dateRange')" class="text-danger">
+            La date de début doit être antérieure à la date de fin.
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="addEventForm.invalid">Ajouter l'Événement</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

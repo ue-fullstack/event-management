@@ -1,4 +1,4 @@
-<section class="section">
+<section class="section mt-5">
   <div class="container">
     <div class="row mb-4">
       <div class="col-md-8">
@@ -10,25 +10,45 @@
           class="form-control"
           placeholder="Rechercher par nom"
           [(ngModel)]="searchTerm"
-          (input)="filterArtists()"
+          (ngModelChange)="searchArtists()"
         />
       </div>
     </div>
 
     <div class="row">
-      <div *ngFor="let artist of displayedArtists" class="col-md-6 col-lg-4 mb-4">
+      <div *ngFor="let artist of filteredArtists; let i = index" class="col-md-6 col-lg-4 mb-4">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">{{ artist.name }}</h5>
-            <p class="card-text">
-              Événements :
-              <span *ngIf="artist.events.length > 0; else noEvents">
-                {{ artist.events.join(', ') }}
-              </span>
-              <ng-template #noEvents>Aucun événement</ng-template>
-            </p>
-            <button class="btn btn-primary" [routerLink]="['/artists', artist.id]">
+            <h5 class="card-title">{{ artist.label }}</h5>
+            <hr>
+
+            <div class="card col-12">
+              <div class="card-header" [id]="'heading' + i">
+                <h5 class="mb-0">
+                  <button class="btn btn-link" (click)="toggleEvents(artist.id)" [attr.aria-expanded]="artist.showEvents" [attr.aria-controls]="'collapse' + i">
+                    <span class="fa" [ngClass]="{'fa-plus-circle': !artist.showEvents, 'fa-minus-circle': artist.showEvents}"></span> 
+                    ({{artist.events?.length || 0}}) événements
+                  </button>
+                </h5>
+              </div>
+              <div [id]="'collapse' + i" [ngClass]="{'collapse': true, 'show': artist.showEvents}" [attr.aria-labelledby]="'heading' + i">
+                <div class="card-body">
+                  <ng-container *ngIf="artist.events && artist.events.length > 0; else noEvents">
+                    <ul>
+                      <li *ngFor="let event of artist.events">{{ event.label }}</li>
+                    </ul>
+                  </ng-container>
+                  <ng-template #noEvents>Aucun événement</ng-template>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn btn-primary  m-2" [routerLink]="['/artists', artist.id]">
               Voir Détails
+            </button>
+
+            <button class="btn btn-danger m-2" (click)="deleteArtist(artist.id)">
+              Supprimer
             </button>
           </div>
         </div>
@@ -39,15 +59,15 @@
       <button
         class="btn btn-secondary"
         (click)="previousPage()"
-        [disabled]="currentPage === 1"
+        [disabled]="page === 0"
       >
         Précédent
       </button>
-      <span class="mx-2">Page {{ currentPage }} / {{ totalPages }}</span>
+      <span class="mx-2">Page {{ page + 1 }} / {{ totalPages }}</span>
       <button
         class="btn btn-secondary"
         (click)="nextPage()"
-        [disabled]="currentPage === totalPages"
+        [disabled]="page === totalPages - 1"
       >
         Suivant
       </button>
