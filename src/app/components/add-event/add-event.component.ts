@@ -19,6 +19,7 @@ import {
   switchMap,
 } from 'rxjs';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-event',
@@ -69,7 +70,7 @@ export class AddEventComponent implements OnInit {
   checkLabelExists(label: string): Observable<boolean> {
     return this.eventService.checkEventExists(label);
   }
-  
+
 
   dateRangeValidator(fg: FormGroup) {
     const start = fg.get('startDate')?.value;
@@ -96,21 +97,42 @@ export class AddEventComponent implements OnInit {
     if (this.addEventForm.valid && !this.labelExists) {
       this.eventService.addEvent(this.addEventForm.value).subscribe({
         next: () => {
-          alert('Événement ajouté avec succès !');
-          this.router.navigate(['/events']);
+          Swal.fire({
+            icon: 'success',
+            title: 'Succès',
+            text: 'Événement ajouté avec succès !',
+            confirmButtonText: 'OK',
+          }).then(() => {
+            this.router.navigate(['/events']);
+          });
         },
         error: (err) => {
           if (err.status === 409) {
-            alert('Cet événement existe déjà.');
+            Swal.fire({
+              icon: 'error',
+              title: 'Erreur',
+              text: 'Cet événement existe déjà.',
+              confirmButtonText: 'OK',
+            });
           } else {
-            alert(`Erreur : ${err.message}`);
+            Swal.fire({
+              icon: 'error',
+              title: 'Erreur',
+              text: `Erreur : ${err.message}`,
+              confirmButtonText: 'OK',
+            });
           }
         },
       });
     } else {
-      alert('Formulaire invalide.');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Attention',
+        text: 'Formulaire invalide.',
+        confirmButtonText: 'OK',
+      });
     }
   }
-  
- 
+
+
 }

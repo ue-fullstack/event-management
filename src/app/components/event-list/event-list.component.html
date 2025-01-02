@@ -1,4 +1,4 @@
-<section class="news section mt-1">
+<section class="events section mt-1">
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -8,14 +8,17 @@
       </div>
     </div>
     <div class="row mb-4">
-      <div class="col-md-6 offset-md-3">
+      <div class="col-md-4">
         <input
           type="text"
-          class="form-control"
-          placeholder="Rechercher un événement"
+          class="form-control search-input"
+          placeholder="Rechercher par nom"
           [(ngModel)]="searchTerm"
           (ngModelChange)="searchEvents()"
         />
+      </div>
+      <div class="col-md-12 mt-2 text-right">
+        <a routerLink="/addEvent" class="btn btn-main-md mb-3">Ajouter un événement</a>
       </div>
     </div>
     <div class="row">
@@ -23,7 +26,7 @@
         class="col-lg-4 col-md-6 col-sm-8 col-10 m-auto"
         *ngFor="let event of filteredEvents"
       >
-        <div class="blog-post">
+        <div class="event-post">
           <div class="post-thumb">
             <a [routerLink]="['/events', event.id]">
               <img
@@ -58,29 +61,25 @@
             <div class="post-meta">
               <ul class="list-inline">
                 <li class="list-inline-item">
-                  <i class="fa fa-heart-o"></i>
-                  <a>0</a>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fa fa-music"></i>
+                  <i class="fa fa-user"></i>
                   <a>{{ event.artists.length }}</a>
                 </li>
                 <li class="list-inline-item">
                   <i class="fa fa-link"></i>
                   <a [routerLink]="['/associerArtist', event.id]">Asscoier</a>
                 </li>
-				<li class="list-inline-item">
-					<i class="fa fa-trash-o"></i>
-					<a style="cursor: pointer;" (click)="deleteEvent(event.id)">Supprimer</a>
-				</li>
+                <li class="list-inline-item">
+                  <i class="fa fa-trash-o"></i>
+                  <a style="cursor: pointer;" (click)="deleteEvent(event.id)">Supprimer</a>
+                </li>
               </ul>
             </div>
           </div>
         </div>
       </div>
-      <nav aria-label="Page navigation">
+      <div class="pagination mt-4">
         <ul class="pagination justify-content-center">
-          <li class="page-item" [class.disabled]="currentPage === 1">
+          <li class="page-item" >
             <a
               class="page-link"
               (click)="previousPage()"
@@ -89,13 +88,22 @@
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-          <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <li *ngFor="let page of [].constructor(totalPages); let i = index" class="page-item" [class.active]="i === currentPage">
+            <a
+              class="page-link"
+              (click)="goToPage(i)"
+            >
+              {{ i + 1 }}
+            </a>
+          </li>
+
+          <li class="page-item">
             <a class="page-link" (click)="nextPage()" aria-label="Suivant">
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>
         </ul>
-      </nav>
+      </div>
     </div>
   </div>
 </section>

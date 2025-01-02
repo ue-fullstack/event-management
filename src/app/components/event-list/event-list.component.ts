@@ -3,6 +3,7 @@ import { EventService } from '../../services/event.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-event-list',
@@ -52,19 +53,47 @@ export class EventListComponent implements OnInit {
       this.loadEvents();
     }
   }
+  goToPage(pageNumber: number): void {
+    if (pageNumber >= 0 && pageNumber < this.totalPages) {
+      this.currentPage = pageNumber;
+      this.loadEvents();
+    }
+  }
 
   deleteEvent(id: string): void {
-    if(confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')) {
-      this.eventService.deleteEvent(id).subscribe(
-        () => {
-          this.allEvents = this.allEvents.filter(event => event.id !== id);
-          alert("Evénement supprimé!");
-        },
-        error => {
-          console.error('Erreur lors de la suppression de l\'événement', error);
-        }
-      );
-    }
+    Swal.fire({
+      title: 'Confirmer la suppression',
+      text: 'Êtes-vous sûr de vouloir supprimer cet événement ? Cette action est irréversible.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui, supprimer',
+      cancelButtonText: 'Annuler',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.eventService.deleteEvent(id).subscribe(
+          () => {
+            this.allEvents = this.allEvents.filter(event => event.id !== id);
+            Swal.fire({
+              icon: 'success',
+              title: 'Succès',
+              text: 'L\'événement a été supprimé avec succès.',
+              confirmButtonText: 'OK',
+            });
+          },
+          (error) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Erreur',
+              text: `Une erreur est survenue lors de la suppression de l'événement : ${error.message}`,
+              confirmButtonText: 'OK',
+            });
+            console.error('Erreur lors de la suppression de l\'événement', error);
+          }
+        );
+      }
+    });
   }
 
   onDetail(eventId: string) {

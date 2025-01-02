@@ -6,6 +6,7 @@ import { ApiResponseArtist, Artist } from '../../models/artist.model';
 import { forkJoin } from 'rxjs';
 import { Event } from '../../models/event.model';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-artist-list',
@@ -52,7 +53,7 @@ export class ArtistListComponent implements OnInit {
       }
     }
   }
-  
+
 
   loadEventsForArtist(artist: Artist & { showEvents?: boolean }): void {
     this.artistService.getEventForSpecificArtist(artist.id).subscribe(
@@ -79,21 +80,50 @@ export class ArtistListComponent implements OnInit {
     }
   }
 
-  deleteArtist(id: string): void {
-    if(confirm('Êtes-vous sûr de vouloir supprimer cet artiste ?')) {
-      this.artistService.deleteArtist(id).subscribe(
-        () => {
-          this.allArtists = this.allArtists.filter(artist => artist.id !== id);
-          this.filteredArtists = this.filteredArtists.filter(artist => artist.id !== id);
-          alert("Artiste supprimé!");
-        },
-        error => {
-          console.error('Erreur lors de la suppression de l\'artiste', error);
-        }
-      );
+  goToPage(pageNumber: number): void {
+    if (pageNumber >= 0 && pageNumber < this.totalPages) {
+      this.page = pageNumber;
+      this.loadArtists();
     }
   }
-  
+
+  deleteArtist(id: string): void {
+    Swal.fire({
+      title: 'Confirmer la suppression',
+      text: 'Êtes-vous sûr de vouloir supprimer cet artiste ? Cette action est irréversible.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Oui, supprimer',
+      cancelButtonText: 'Annuler',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.artistService.deleteArtist(id).subscribe({
+          next: () => {
+            this.allArtists = this.allArtists.filter(artist => artist.id !== id);
+            this.filteredArtists = this.filteredArtists.filter(artist => artist.id !== id);
+            Swal.fire({
+              icon: 'success',
+              title: 'Supprimé',
+              text: 'L\'artiste a été supprimé avec succès.',
+              confirmButtonText: 'OK',
+            });
+          },
+          error: (err) => {
+            console.error('Erreur lors de la suppression de l\'artiste', err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Erreur',
+              text: `Une erreur est survenue : ${err.message}`,
+              confirmButtonText: 'OK',
+            });
+          },
+        });
+      }
+    });
+  }
+
 
   onDetail(artistId: string) {
     this.route.navigate(['artists', artistId]);

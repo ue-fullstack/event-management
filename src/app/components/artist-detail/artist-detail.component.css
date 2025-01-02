@@ -1,0 +1,131 @@
+.artist-detail .block {
+  padding-bottom: 70px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.artist-detail .block .image-block {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  padding: 6px;
+}
+
+@media (max-width: 767px) {
+  .artist-detail .block .image-block {
+    margin-bottom: 30px;
+  }
+}
+
+.artist-detail .block .content-block .name h3 {
+  font-weight: 400;
+}
+
+.artist-detail .block .content-block .profession {
+  margin-bottom: 20px;
+}
+
+.artist-detail .block .content-block .profession p {
+  color: #ff6600;
+  font-size: 0.9375rem;
+}
+
+.artist-detail .block .content-block .details {
+  margin-bottom: 35px;
+}
+
+.artist-detail .block .content-block .details p {
+  font-size: 0.9375rem;
+}
+
+.artist-detail .block .content-block .details p:not(:last-child) {
+  margin-bottom: 35px;
+}
+
+.artist-detail .block .content-block .social-profiles h5 {
+  font-weight: 400;
+  margin-bottom: 25px;
+}
+
+.artist-detail .block .content-block .social-profiles ul.social-list li a {
+  display: block;
+  height: 40px;
+  width: 40px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  text-align: center;
+}
+
+.artist-detail .block .content-block .social-profiles ul.social-list li a i {
+  line-height: 40px;
+}
+
+.artist-detail .block .content-block .social-profiles ul.social-list li a:hover {
+  background: #ff6600;
+  border: 1px solid #ff6600;
+  color: #fff;
+}
+
+.artist-detail .block-2 {
+  padding-top: 70px;
+  padding-bottom: 10px;
+}
+
+.artist-detail .block-2 h3, .artist-detail .block-2 p, .artist-detail .block-2 li {
+  font-size: 0.9375rem;
+}
+
+.artist-detail .block-2 .personal-info h5, .artist-detail .block-2 .skills h5 {
+  font-weight: 400;
+  margin-bottom: 15px;
+}
+
+.artist-detail .block-2 .personal-info p, .artist-detail .block-2 .skills p {
+  margin-bottom: 15px;
+}
+
+@media (max-width: 767px) {
+  .artist-detail .block-2 .personal-info {
+    margin-bottom: 30px;
+  }
+}
+
+.artist-detail .block-2 .personal-info ul li {
+  position: relative;
+  list-style: none;
+  margin-left: 25px;
+}
+
+.artist-detail .block-2 .personal-info ul li:not(:last-child) {
+  margin-bottom: 5px;
+}
+
+.artist-detail .block-2 .personal-info ul li:before {
+  position: absolute;
+  left: -25px;
+  content: "\f10c";
+  font-family: FontAwesome;
+  color: #ff6600;
+}
+
+.artist-detail .block-2 .skills .skill-bar {
+  margin-bottom: 20px;
+}
+
+.artist-detail .block-2 .skills .skill-bar p {
+  margin-bottom: 5px;
+}
+
+.artist-detail .block-2 .skills .skill-bar .progress {
+  border-radius: 0;
+  overflow: visible;
+}
+
+.artist-detail .block-2 .skills .skill-bar .progress .progress-bar {
+  background-color: #ff6600;
+}
+
+.artist-detail .block-2 .skills .skill-bar .progress .progress-bar span {
+  font-family: "Montserrat", sans-serif;
+  float: right;
+  margin-top: -20px;
+  color: #222222;
+}

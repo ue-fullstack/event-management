@@ -1,0 +1,128 @@
+
+.banner {
+  padding: 250px 0 150px;
+  position: relative;
+}
+
+@media (max-width: 1024px) {
+  .banner {
+    padding: 100px 0;
+  }
+}
+
+.banner .block {
+  position: relative;
+  z-index: 10;
+}
+
+.banner .block .timer .syotimer-cell {
+  margin-right: 25px;
+  margin-bottom: 33px;
+  display: inline-block;
+}
+
+@media (max-width: 480px) {
+  .banner .block .timer .syotimer-cell {
+    margin-right: 10px;
+    margin-bottom: 20px;
+  }
+}
+
+.banner .block .timer .syotimer-cell .syotimer-cell__value {
+  min-width: 80px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 35px;
+  line-height: 77px;
+  text-align: center;
+  position: relative;
+  font-weight: bold;
+  color: #fff;
+  border: 2px solid #7c7491;
+  margin-bottom: 8px;
+  border-radius: 100%;
+  box-shadow: 3.5px 6.062px 0px 0px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 480px) {
+  .banner .block .timer .syotimer-cell .syotimer-cell__value {
+    font-size: 30px;
+  }
+}
+
+.banner .block .timer .syotimer-cell .syotimer-cell__unit {
+  text-align: center;
+  font-size: 1rem;
+  text-transform: lowercase;
+  font-weight: normal;
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+}
+
+.banner .block h1 {
+  text-transform: uppercase;
+  font-size: 5.5rem;
+  color: #ff6600;
+  font-weight: 500;
+  margin-bottom: 5px;
+  text-shadow: 3.5px 6.062px 0px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 767px) {
+  .banner .block h1 {
+    font-size: 4rem;
+  }
+}
+
+.banner .block h2 {
+  text-transform: uppercase;
+  font-size: 4.625rem;
+  color: #fff;
+  font-weight: 400;
+  text-shadow: 3.5px 6.062px 0px rgba(0, 0, 0, 0.1);
+  font-style: italic;
+}
+
+@media (max-width: 767px) {
+  .banner .block h2 {
+    font-size: 3.2rem;
+  }
+}
+
+.banner .block h6 {
+  color: #fff;
+  font-weight: 400;
+  margin-bottom: 50px;
+}
+
+.banner-two {
+  padding: 250px 0 150px;
+  position: relative;
+  overflow: hidden;
+}
+
+.banner-two .block h1 {
+  color: #ff6600;
+  font-size: 88px;
+}
+
+.banner-two .block h2 {
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 74px;
+  margin-bottom: 10px;
+}
+
+.banner-two .block h3 {
+  font-size: 74px;
+}
+
+.banner-two .block h6 {
+  margin-top: 48px;
+  font-weight: 400;
+  margin-bottom: 60px;
+}
+.bg-banner-one {
+  background: url(../../../assets/images/background/homepage-one-banner.jpg) no-repeat;
+  background-size: cover;
+  background-position: center center;
+}

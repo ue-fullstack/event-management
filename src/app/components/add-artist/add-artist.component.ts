@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 import {
   FormBuilder,
   FormGroup,
@@ -20,7 +21,7 @@ import { Observable, of } from 'rxjs';
 export class AddArtistComponent implements OnInit {
   addArtistForm: FormGroup;
   labelExists: boolean = false;
-  
+
   constructor(
     private fb: FormBuilder,
     private artistService: ArtistService,
@@ -41,7 +42,7 @@ export class AddArtistComponent implements OnInit {
       this.labelExists = exists;
     });
   }
-  
+
 
   checkLabelExists(label: string): Observable<boolean> {
     return this.artistService.checkArtistExists(label);
@@ -51,21 +52,47 @@ export class AddArtistComponent implements OnInit {
     if (this.addArtistForm.valid && !this.labelExists) {
       this.artistService.addArtist(this.addArtistForm.value).subscribe({
         next: () => {
-          alert('Artiste ajouté avec succès !');
-          this.router.navigate(['/artists']);
+          Swal.fire({
+            icon: 'success',
+            title: 'Succès',
+            text: 'Artiste ajouté avec succès !',
+            confirmButtonText: 'OK',
+          }).then(() => {
+            this.router.navigate(['/artists']);
+          });
         },
         error: (err) => {
           if (err.status === 409) {
-            alert('Cet artiste existe déjà.');
+            Swal.fire({
+              icon: 'warning',
+              title: 'Attention',
+              text: 'Cet artiste existe déjà.',
+              confirmButtonText: 'OK',
+            });
           } else {
-            alert(`Erreur : ${err.message}`);
+            Swal.fire({
+              icon: 'error',
+              title: 'Erreur',
+              text: `Erreur : ${err.message}`,
+              confirmButtonText: 'OK',
+            });
           }
         },
       });
     } else if (this.labelExists) {
-      alert('Cet artiste existe déjà.');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Attention',
+        text: 'Cet artiste existe déjà.',
+        confirmButtonText: 'OK',
+      });
     } else {
-      alert('Formulaire invalide.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur',
+        text: 'Formulaire invalide.',
+        confirmButtonText: 'OK',
+      });
     }
   }
 }

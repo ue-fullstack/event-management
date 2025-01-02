@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiResponseArtist } from '../../models/artist.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-artist-to-event',
@@ -55,15 +56,31 @@ export class AddArtistToEventComponent implements OnInit {
         .addArtistToEvent(this.selectedEventId, this.selectedArtistId)
         .subscribe({
           next: () => {
-            alert("Artiste associé à l'événement avec succès !");
-            this.router.navigate(['/events', this.selectedEventId]);
+            Swal.fire({
+              icon: 'success',
+              title: 'Succès',
+              text: 'Artiste associé à l\'événement avec succès !',
+              confirmButtonText: 'OK',
+            }).then(() => {
+              this.router.navigate(['/events', this.selectedEventId]);
+            });
           },
           error: (err) => {
-            alert(`Erreur : ${err.message}`);
+            Swal.fire({
+              icon: 'error',
+              title: 'Erreur',
+              text: `Erreur : ${err.message}`,
+              confirmButtonText: 'OK',
+            });
           },
         });
     } else {
-      alert('Veuillez sélectionner un artiste et un événement.');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Attention',
+        text: 'Veuillez sélectionner un artiste et un événement.',
+        confirmButtonText: 'OK',
+      });
     }
   }
 }

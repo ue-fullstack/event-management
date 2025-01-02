@@ -1,23 +1,30 @@
 <section class="section mt-5">
   <div class="container">
+    <!-- Section Title with Icon -->
     <div class="row mb-4">
       <div class="col-md-8">
-        <h3 class="section-title">Liste des Artistes</h3>
+        <h3 class="section-title d-flex align-items-center">
+          <i class="fa fa-users mr-2"></i> Liste des Artistes
+        </h3>
       </div>
       <div class="col-md-4">
         <input
           type="text"
-          class="form-control"
+          class="form-control search-input"
           placeholder="Rechercher par nom"
           [(ngModel)]="searchTerm"
           (ngModelChange)="searchArtists()"
         />
       </div>
+      <div class="col-md-12 text-right">
+        <a routerLink="/addArtist" class="btn btn-main-md mb-3">Ajouter un artiste</a>
+      </div>
     </div>
 
+    <!-- Artists List -->
     <div class="row">
       <div *ngFor="let artist of filteredArtists; let i = index" class="col-md-6 col-lg-4 mb-4">
-        <div class="card">
+        <div class="card shadow-sm artist-card">
           <div class="card-body">
             <h5 class="card-title">{{ artist.label }}</h5>
             <hr>
@@ -25,9 +32,9 @@
             <div class="card col-12">
               <div class="card-header" [id]="'heading' + i">
                 <h5 class="mb-0">
-                  <button class="btn btn-link" (click)="toggleEvents(artist.id)" [attr.aria-expanded]="artist.showEvents" [attr.aria-controls]="'collapse' + i">
-                    <span class="fa" [ngClass]="{'fa-plus-circle': !artist.showEvents, 'fa-minus-circle': artist.showEvents}"></span> 
-                    ({{artist.events?.length || 0}}) événements
+                  <button class="btn btn-link text-dark" (click)="toggleEvents(artist.id)" [attr.aria-expanded]="artist.showEvents" [attr.aria-controls]="'collapse' + i">
+                    <span class="fa" [ngClass]="{'fa-plus-circle': !artist.showEvents, 'fa-minus-circle': artist.showEvents}"></span>
+                    ({{ artist.events?.length || 0 }}) événements
                   </button>
                 </h5>
               </div>
@@ -43,34 +50,42 @@
               </div>
             </div>
 
-            <button class="btn btn-primary  m-2" [routerLink]="['/artists', artist.id]">
-              Voir Détails
-            </button>
-
-            <button class="btn btn-danger m-2" (click)="deleteArtist(artist.id)">
-              Supprimer
-            </button>
+            <div class="d-flex justify-content-between mt-3">
+              <button class="btn btn-primary btn-sm" [routerLink]="['/artists', artist.id]">Voir Détails</button>
+              <button class="btn btn-danger btn-sm" (click)="deleteArtist(artist.id)">Supprimer</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Pagination -->
     <div class="pagination mt-4">
-      <button
-        class="btn btn-secondary"
-        (click)="previousPage()"
-        [disabled]="page === 0"
-      >
-        Précédent
-      </button>
-      <span class="mx-2">Page {{ page + 1 }} / {{ totalPages }}</span>
-      <button
-        class="btn btn-secondary"
-        (click)="nextPage()"
-        [disabled]="page === totalPages - 1"
-      >
-        Suivant
-      </button>
+      <ul class="pagination justify-content-center">
+        <li class="page-item" >
+          <a
+            class="page-link"
+            (click)="previousPage()"
+            aria-label="Précédent"
+          >
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li *ngFor="let page of [].constructor(totalPages); let i = index" class="page-item" [class.active]="i === page">
+          <a
+            class="page-link"
+            (click)="goToPage(i)"
+          >
+            {{ i + 1 }}
+          </a>
+        </li>
+
+        <li class="page-item">
+          <a class="page-link" (click)="nextPage()" aria-label="Suivant">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 </section>
