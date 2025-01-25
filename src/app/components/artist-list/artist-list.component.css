@@ -1,19 +1,19 @@
-/* Améliorer le cadre de l'artiste */
+
 .artist-card {
-  border-radius: 12px; /* Coins arrondis */
-  background-color: #fff; /* Fond blanc */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre douce pour donner de la profondeur */
-  overflow: hidden; /* Pour éviter que les bords de l'image ou du contenu dépassent */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation pour la transformation */
+  border-radius: 12px;
+  background-color: #fff; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
 }
 
 .artist-card:hover {
-  transform: translateY(-5px); /* Effet de décalage léger au survol */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Ombre plus marquée pour l'effet de survol */
+  transform: translateY(-5px); 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); 
 }
 
 .artist-card .card-body {
-  padding: 20px;
+  padding: 10px;
 }
 
 .artist-card .card-title {
@@ -56,7 +56,6 @@
   background-color: #c82333;
 }
 
-/* Animation des événements */
 .card-header button {
   font-size: 1rem;
   font-weight: 500;

@@ -1,50 +1,17 @@
-
-.footer-main {
-  background: #272735;
-  padding: 90px 0;
-}
-
-@media (max-width: 767px) {
-  .footer-main {
-    padding: 50px 0;
-  }
-}
-
-.footer-main .block img {
-  margin-bottom: 60px;
-}
-
-.footer-main .block ul.social-links-footer {
-  margin-bottom: 0;
-}
-
-.footer-main .block ul.social-links-footer .list-inline-item:not(:last-child) {
-  margin-right: 20px;
-}
-
-.footer-main .block ul.social-links-footer li a {
-  display: block;
-  height: 50px;
-  width: 50px;
-  text-align: center;
-  background: #fff;
-}
-
-.footer-main .block ul.social-links-footer li a i {
-  line-height: 50px;
-}
-
-.footer-main .block ul.social-links-footer li a:hover {
-  background: #ff6600;
-}
-
-.footer-main .block ul.social-links-footer li a:hover i {
-  color: #fff;
+/* Le footer sera fixé en bas de la page */
+body, html {
+  height: 100%;
+  margin: 0;
 }
 
 .subfooter {
   background: #2a2a37;
   padding: 18px 0;
+  position: sticky; /* Reste fixé */
+  bottom: 0; /* S'assure qu'il reste en bas */
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Assure qu'il est au-dessus des autres éléments */
 }
 
 .subfooter .copyright-text p {

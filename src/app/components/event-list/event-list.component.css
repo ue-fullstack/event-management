@@ -1,317 +1,175 @@
-.events .event-post {
-  transition: .2s ease;
-  margin-bottom: 30px;
+/* Section des événements */
+.events .section-title h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-align: left; 
+  margin-bottom: 5px;
 }
 
-@media (max-width: 767px) {
-  .events .event-post .post-thumb img {
-    width: 100%;
-  }
-}
-
-.events .event-post .post-content {
-  position: relative;
-  padding: 30px 30px 25px 30px;
-  border-width: 0 1px 1px 1px;
-  border-style: solid;
-  border-color: #e5e5e5;
-}
-
-.events .event-post .post-content .date {
-  position: absolute;
-  top: -32px;
-  left: 30px;
-  width: 130px; /* Augmenté pour accueillir deux dates */
-  height: 65px;
-  text-align: center;
-  background: #ff6600;
-  display: flex;
-  align-items: center;
-  justify-content: space-around; /* Pour espacer les deux dates */
-}
-
-.events .event-post .post-content .date .start-date,
-.events .event-post .post-content .date .end-date {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.events .event-post .post-content .date h4 {
-  color: #fff;
-  margin: 0;
-  font-size: 1.2rem; /* Ajusté pour un meilleur ajustement */
-}
-
-.events .event-post .post-content .date h4 span {
-  display: block;
-  font-size: 0.8rem; /* Réduit pour un meilleur ajustement */
-  font-weight: 400;
-}
-
-.events .event-post .post-content .date::after {
-  content: '';
-  position: absolute;
-  top: 10px;
-  bottom: 10px;
-  left: 52%;
-  width: 2px;
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
-
-.events .event-post .post-content .post-title {
-  padding-bottom: 5px;
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 15px;
-}
-
-.events .event-post .post-content .post-title h2 {
-  margin-top: 10px;
-}
-
-.events .event-post .post-content .post-title h2 a {
-  font-size: 1.25rem;
-  font-weight: 400;
-  color: #222222;
-}
-
-.events .event-post .post-content .post-title h2 a:hover {
+.events .section-title .alternate {
   color: #ff6600;
 }
 
-.events .event-post .post-content .post-meta ul {
-  margin-bottom: 0;
-}
-
-.events .event-post .post-content .post-meta ul li i {
-  margin-right: 7px;
-}
-
-.events .event-post .post-content .post-meta ul li a {
-  display: inline-block;
-  padding-right: 25px;
-  font-size: 0.875rem;
-}
-
-.events .event-post:hover {
-  box-shadow: 0px 0px 30px 0px rgba(11, 29, 66, 0.15);
-}
-
-.events .event-post.single {
-  margin-bottom: 100px;
-}
-
-.events .event-post.single .post-title {
-  padding-top: 35px;
-  padding-bottom: 0;
-  border: none;
-  margin-bottom: 10px;
-}
-
-.events .event-post.single .post-title h3 {
-  font-weight: 400;
-}
-
-.events .event-post.single .post-meta {
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 10px;
-}
-
-.events .event-post.single .post-details p {
-  padding: 13px 0;
-  font-size: 15px;
-}
-
-.events .event-post.single .post-details .quotes {
-  background: #f5f5f8;
-  padding: 30px;
-  border-left: 3px solid #ff6600;
-  margin: 15px 0;
-}
-
-.events .event-post.single .post-details .quotes blockquote {
-  font-size: 15px;
-  font-style: italic;
-}
-
-.events .event-post.single .post-details .share-block {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding-top: 20px;
-  padding-bottom: 25px;
-}
-
-@media (max-width: 991px) {
-  .events .event-post.single .post-details .share-block {
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-  }
-}
-
-.events .event-post.single .post-details .share-block p {
-  padding: 0;
-}
-
-.events .event-post.single .post-details .share-block .tag {
-  -ms-flex-preferred-size: 50%;
-  flex-basis: 50%;
-  -ms-flex-item-align: center;
-  -ms-grid-row-align: center;
-  align-self: center;
-}
-
-@media (max-width: 991px) {
-  .events .event-post.single .post-details .share-block .tag {
-    -ms-flex-preferred-size: 100%;
-    flex-basis: 100%;
-    text-align: center;
-    margin-bottom: 30px;
-    -webkit-box-flex: 1;
-    -ms-flex-positive: 1;
-    flex-grow: 1;
-  }
-}
-
-.events .event-post.single .post-details .share-block .tag p, .events .event-post.single .post-details .share-block .tag ul {
-  display: inline;
-  font-family: "Montserrat", sans-serif;
-}
-
-.events .event-post.single .post-details .share-block .tag p {
-  color: #222222;
-}
-
-.events .event-post.single .post-details .share-block .tag ul li a {
-  color: #848484;
-  font-size: 15px;
-}
-
-.events .event-post.single .post-details .share-block .tag ul li a:hover {
-  color: #ff6600;
-}
-
-.events .event-post.single .post-details .share-block .share {
-  -ms-flex-preferred-size: 50%;
-  flex-basis: 50%;
-  text-align: right;
-}
-
-@media (max-width: 991px) {
-  .events .event-post.single .post-details .share-block .share {
-    -ms-flex-preferred-size: 100%;
-    flex-basis: 100%;
-    -webkit-box-flex: 1;
-    -ms-flex-positive: 1;
-    flex-grow: 1;
-    text-align: center;
-  }
-}
-
-.events .event-post.single .post-details .share-block .share p, .events .event-post.single .post-details .share-block .share ul {
-  display: inline;
-  font-family: "Montserrat", sans-serif;
-}
-
-.events .event-post.single .post-details .share-block .share p {
-  margin-right: 18px;
-}
-
-.events .event-post.single .post-details .share-block .share ul.social-links-share {
-  margin-bottom: 0;
-}
-
-.events .event-post.single .post-details .share-block .share ul.social-links-share .list-inline-item:not(:last-child) {
-  margin-right: 7px;
-}
-
-.events .event-post.single .post-details .share-block .share ul.social-links-share li a {
-  display: block;
-  height: 38px;
-  width: 38px;
-  text-align: center;
-  background: #fff;
-  border: 1px solid #e5e5e5;
-}
-
-.events .event-post.single .post-details .share-block .share ul.social-links-share li a i {
-  line-height: 38px;
-}
-
-.events .event-post.single .post-details .share-block .share ul.social-links-share li a:hover {
-  background: #ff6600;
-  border-color: #ff6600;
-}
-
-.events .event-post.single .post-details .share-block .share ul.social-links-share li a:hover i {
-  color: #fff;
-}
-
-.events .event-post.single:hover {
-  box-shadow: none;
-}
-
-.events .comments {
-  padding-bottom: 80px;
-}
-
-.events .comments h5 {
-  font-weight: 400;
-  margin-bottom: 10px;
-}
-
-.events .comments .comment {
-  padding-top: 14px;
-}
-
-.events .comments .comment img {
-  margin-right: 30px;
-}
-
-.events .comments .comment .media-body h6 {
-  font-size: 16px;
-  font-weight: 400;
-  margin-bottom: 10px;
-}
-
-.events .comments .comment .media-body p, .events .comments .comment .media-body ul {
-  font-size: 15px;
-}
-
-.events .comments .comment .media-body p {
-  margin-bottom: 14px;
-}
-
-.events .comments .comment .media-body ul {
-  margin-bottom: 10px;
-}
-
-.events .comments .comment .media-body ul li span {
-  margin-right: 7px;
-}
-
-.events .comments .comment .media-body ul li a {
-  color: #ff6600;
-}
-
-.events .comment-form h5 {
-  font-weight: 400;
-  margin-bottom: 30px;
-}
-
-.events .comment-form .form-control, .events .comment-form button {
-  margin-bottom: 30px;
-}
 .search-input {
-  border-radius: 20px;
+  border-radius: 25px;
   padding-left: 20px;
   border: 1px solid #ddd;
+  height: 40px;
+  font-size: 1rem;
+  width: 100%;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .search-input:focus {
   border-color: #007bff;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.events .row.mb-4 .col-md-6.text-end {
+  text-align: right;
+}
+
+.events .btn-main-md {
+  padding: 5px 20px;
+  font-size: 1rem;
+  border-radius: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.events .btn-main-md:hover {
+  background-color: #e65c00;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Mise en forme des cartes d'événements */
+.events .event-post {
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #fff;
+  transition: box-shadow 0.3s ease;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.events .event-post:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.events .event-post .post-thumb img {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  object-fit: cover;
+  width: 100%;
+  height: 200px;
+}
+
+.events .event-post .post-content {
+  padding: 20px;
+  font-family: "Montserrat", sans-serif;
+  position: relative;
+}
+
+.events .event-post .post-content .date {
+  position: absolute;
+  top: -30px;
+  left: 30px;
+  width: 140px;
+  height: 70px;
+  background-color: #ff6600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.events .event-post .post-content .date h4 {
+  color: #fff;
+  font-size: 1.2rem;
+  margin: 0;
+  text-align: center;
+}
+
+.events .event-post .post-content .date h4 span {
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+.events .event-post .post-content .post-title h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.events .event-post .post-content .post-title h2 a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.events .event-post .post-content .post-title h2 a:hover {
+  color: #ff6600;
+}
+
+/* Pagination */
+.pagination {
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.page-item .page-link {
+  border-radius: 50%;
+  padding: 10px 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.page-item .page-link:hover {
+  background-color: #ff6600;
+  color: #fff;
+}
+
+.page-item.active .page-link {
+  background-color: #ff6600;
+  color: #fff;
+  border-color: #ff6600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .events .row .col-md-6 {
+    margin-bottom: 30px;
+  }
+
+  .events .event-post .post-content {
+    padding: 15px;
+  }
+
+  .events .event-post .post-content .date {
+    top: -20px;
+    left: 20px;
+    width: 120px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 767px) {
+  .events .event-post .post-thumb img {
+    height: 180px;
+  }
+
+  .events .event-post .post-content .date h4 {
+    font-size: 1rem;
+  }
+
+  .events .event-post .post-content .date h4 span {
+    font-size: 0.75rem;
+  }
+
+  .pagination .page-item .page-link {
+    padding: 8px 12px;
+  }
 }

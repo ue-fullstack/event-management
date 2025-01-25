@@ -1,5 +1,5 @@
 .artist-detail .block {
-  padding-bottom: 70px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #e5e5e5;
 }
 
@@ -20,7 +20,7 @@
 }
 
 .artist-detail .block .content-block .profession {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .artist-detail .block .content-block .profession p {

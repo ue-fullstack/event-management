@@ -1,39 +1,54 @@
-<section class="section mt-1">
+<section class="section mt-5">
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <div class="section-title">
-          <h3>Ajouter <span class="alternate">un Artiste</span></h3>
+        <div class="section-title text-center">
+          <h3 class="fw-bold text-primary">
+            <i class="fas fa-user-plus me-2"></i> Ajouter 
+            <span class="alternate">un Artiste</span>
+          </h3>
+          <p class="text-muted">Remplissez les informations ci-dessous pour ajouter un nouvel artiste.</p>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-4 col-md-6 col-sm-8 col-10 m-auto">
-        <form [formGroup]="addArtistForm" (ngSubmit)="addArtist()">
-          <div class="mb-3">
-            <label for="artistName" class="form-label">Nom</label>
-            <input
-              id="artistName"
-              formControlName="label"
-              type="text"
-              class="form-control"
-            />
-            <div
-              *ngIf="
-                addArtistForm.get('label')?.invalid &&
-                addArtistForm.get('label')?.touched
-              "
-              class="text-danger"
-            >
-              Le nom doit comporter au moins 3 caractères.
-            </div>
-            <div *ngIf="labelExists && addArtistForm.get('label')?.touched" class="text-danger">
-				Cet artiste existe déjà.
-			  </div>
-          </div>
+    <div class="row justify-content-center" style="width: 100%; height: 48vh;">
+      <div class="col-lg-8 col-md-10 col-sm-12 mt-1">
+        <div class="card border-0 rounded-4">
+          <div class="card-body p-5 bg-light">
+            <form [formGroup]="addArtistForm" (ngSubmit)="addArtist()">
+              <!-- Nom de l'artiste -->
+              <div class="mb-4">
+                <label for="artistName" class="form-label fw-semibold">
+                  <i class="fas fa-signature me-2 text-primary"></i> Nom de l'artiste
+                </label>
+                <div class="input-group">
+                  <span class="input-group-text bg-primary text-white">
+                    <i class="fas fa-user"></i>
+                  </span>
+                  <input
+                    id="artistName"
+                    formControlName="label"
+                    type="text"
+                    class="form-control"
+                    placeholder="Entrez le nom de l'artiste"
+                    required
+                  />
+                </div>
+                <div *ngIf="addArtistForm.get('label')?.invalid && addArtistForm.get('label')?.touched" class="text-danger mt-2 small">
+                  <i class="fas fa-exclamation-circle me-1"></i> Le nom doit comporter au moins 3 caractères.
+                </div>
+                <div *ngIf="labelExists && addArtistForm.get('label')?.touched" class="text-danger mt-2 small">
+                  <i class="fas fa-exclamation-triangle me-1"></i> Cet artiste existe déjà.
+                </div>
+              </div>
 
-          <button type="submit" class="btn btn-primary">Ajouter</button>
-        </form>
+              <!-- Bouton Ajouter -->
+              <button type="submit" class="btn btn-primary w-100 mt-4 shadow-sm" [disabled]="addArtistForm.invalid || labelExists">
+                <i class="fas fa-plus-circle me-2"></i> Ajouter l'artiste
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
