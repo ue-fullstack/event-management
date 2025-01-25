@@ -1,27 +1,36 @@
-<section class="events section mt-1">
+<section class="events section mt-0">
   <div class="container">
     <div class="row">
-      <div class="col-12">
-        <div class="section-title">
-          <h3>Liste <span class="alternate">des événements</span></h3>
-        </div>
+      <div class="col-md-8">
+        <h3 class="section-title d-flex align-items-center">
+          <i class="fa fa-calendar mr-2"></i> Liste des Events
+        </h3>
       </div>
-    </div>
-    <div class="row mb-4">
+
       <div class="col-md-4">
         <input
           type="text"
           class="form-control search-input"
-          placeholder="Rechercher par nom"
+          placeholder="Rechercher un événement..."
           [(ngModel)]="searchTerm"
           (ngModelChange)="searchEvents()"
         />
       </div>
-      <div class="col-md-12 mt-2 text-right">
-        <a routerLink="/addEvent" class="btn btn-main-md mb-3">Ajouter un événement</a>
+    </div>
+
+    <div class="row mb-1">
+      <div class="col-md-12 text-end">
+        <a routerLink="/addEvent" class="btn btn-main-md mb-3"
+          >Ajouter un événement</a
+        >
       </div>
     </div>
-    <div class="row">
+
+    <!--Liste des Events -->
+    <div class="row" style="width: 100%; height: 48vh">
+      <div *ngIf="filteredEvents.length === 0" class="col-12 text-center">
+        <p class="alert alert-info">Aucun événement disponible pour le moment.</p>
+      </div>
       <div
         class="col-lg-4 col-md-6 col-sm-8 col-10 m-auto"
         *ngFor="let event of filteredEvents"
@@ -30,34 +39,39 @@
           <div class="post-thumb">
             <a [routerLink]="['/events', event.id]">
               <img
-                src="https://picsum.photos/400/200"
+                src="https://picsum.photos/400/250"
                 alt="post-image"
                 class="img-fluid"
               />
             </a>
           </div>
+
           <div class="post-content">
+            <!-- Date Section -->
             <div class="date">
               <div class="start-date">
-                Du
+                <span>Du</span>
                 <h4>
                   {{ event.startDate | date : "dd"
                   }}<span>{{ event.startDate | date : "MMM yyyy" }}</span>
                 </h4>
               </div>
               <div class="end-date">
-                Au
+                <span>Au</span>
                 <h4>
                   {{ event.endDate | date : "dd"
                   }}<span>{{ event.endDate | date : "MMM yyyy" }}</span>
                 </h4>
               </div>
             </div>
-            <div class="post-title">
+
+            <!-- Event Title -->
+            <div class="post-title mt-4">
               <h2>
                 <a [routerLink]="['/events', event.id]">{{ event.label }}</a>
               </h2>
             </div>
+
             <div class="post-meta">
               <ul class="list-inline">
                 <li class="list-inline-item">
@@ -66,43 +80,50 @@
                 </li>
                 <li class="list-inline-item">
                   <i class="fa fa-link"></i>
-                  <a [routerLink]="['/associerArtist', event.id]">Asscoier</a>
+                  <a [routerLink]="['/associerArtist', event.id]">Associer</a>
                 </li>
                 <li class="list-inline-item">
                   <i class="fa fa-trash-o"></i>
-                  <a style="cursor: pointer;" (click)="deleteEvent(event.id)">Supprimer</a>
+                  <a style="cursor: pointer" (click)="deleteEvent(event.id)"
+                    >Supprimer</a
+                  >
                 </li>
               </ul>
             </div>
           </div>
         </div>
+        
       </div>
-      <div class="pagination mt-4">
-        <ul class="pagination justify-content-center">
-          <li class="page-item" >
-            <a
-              class="page-link"
-              (click)="previousPage()"
-              aria-label="Précédent"
-            >
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li *ngFor="let page of [].constructor(totalPages); let i = index" class="page-item" [class.active]="i === currentPage">
-            <a
-              class="page-link"
-              (click)="goToPage(i)"
-            >
-              {{ i + 1 }}
-            </a>
-          </li>
+    </div>
 
-          <li class="page-item">
-            <a class="page-link" (click)="nextPage()" aria-label="Suivant">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
+    <!-- Pagination -->
+    <div class="row" *ngIf="filteredEvents.length > 0">
+      <div class="col-12">
+        <nav aria-label="Pagination">
+          <ul class="pagination justify-content-center">
+            <li class="page-item">
+              <a
+                class="page-link"
+                (click)="previousPage()"
+                aria-label="Précédent"
+              >
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li
+              *ngFor="let page of [].constructor(totalPages); let i = index"
+              class="page-item"
+              [class.active]="i === currentPage"
+            >
+              <a class="page-link" (click)="goToPage(i)">{{ i + 1 }}</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" (click)="nextPage()" aria-label="Suivant">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   </div>

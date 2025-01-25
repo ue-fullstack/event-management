@@ -2,41 +2,84 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <div class="section-title">
-          <h3>Ajouter <span class="alternate">un événement</span></h3>
+        <div class="section-title text-center">
+          <h3 class="fw-bold text-primary">
+            <span class="material-icons me-2 align-middle">event</span> Ajouter 
+            <span class="alternate">un événement</span>
+          </h3>
+          <p class="text-muted">Remplissez les informations ci-dessous pour ajouter un nouvel événement.</p>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-4 col-md-6 col-sm-8 col-10 m-auto">
-        <form [formGroup]="addEventForm" (ngSubmit)="addEvent()">
-          <div class="mb-3">
-            <label for="label" class="form-label">Label de l'Événement</label>
-            <input id="label" formControlName="label" type="text" class="form-control">
-            <div *ngIf="addEventForm.get('label')?.invalid && addEventForm.get('label')?.touched" class="text-danger">
-              Le label doit comporter au moins 3 caractères.
-            </div>
-            <div *ngIf="labelExists && addEventForm.get('label')?.touched" class="text-danger">
-              Cet événement existe déjà.
-            </div>
+    <div class="row justify-content-center mb-3"  style="width: 100%; height: 48vh;">
+      <div class="col-lg-8 col-md-10 col-sm-12">
+        <div class="card border-0 rounded-4">
+          <div class="card-body p-5 bg-light">
+            <form [formGroup]="addEventForm" (ngSubmit)="addEvent()">
+              <div class="mb-4">
+                <label for="label" class="form-label fw-semibold">
+                  <span class="material-icons me-2 text-primary">label</span> Label de l'Événement
+                </label>
+                <div class="input-group">
+                  <span class="input-group-text bg-primary text-white">
+                    <span class="material-icons">edit</span>
+                  </span>
+                  <input 
+                    id="label" 
+                    formControlName="label" 
+                    type="text" 
+                    class="form-control" 
+                    placeholder="Entrez le label de l'événement" 
+                    required
+                  />
+                </div>
+                <div *ngIf="addEventForm.get('label')?.invalid && addEventForm.get('label')?.touched" class="text-danger mt-2 small">
+                  <span class="material-icons me-1">error</span> 
+                  <span *ngIf="addEventForm.get('label')?.errors?.['required']">Le label est requis.</span>
+                  <span *ngIf="addEventForm.get('label')?.errors?.['minlength']">Le label doit comporter au moins 3 caractères.</span>
+                  <span *ngIf="addEventForm.get('label')?.errors?.['exists']">Cet événement existe déjà.</span>
+                </div>
+              </div>
 
+              <div class="mb-4">
+                <label for="startDate" class="form-label fw-semibold">
+                  <span class="material-icons me-2 text-primary">date_range</span> Date de Début
+                </label>
+                <input 
+                  id="startDate" 
+                  formControlName="startDate" 
+                  type="date" 
+                  class="form-control" 
+                  required 
+                />
+                <div *ngIf="addEventForm.get('startDate')?.errors?.['pastDate']" class="text-danger mt-2 small">
+                  <span class="material-icons me-1">error</span> La date de début ne peut pas être dans le passé.
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label for="endDate" class="form-label fw-semibold">
+                  <span class="material-icons me-2 text-primary">event_available</span> Date de Fin
+                </label>
+                <input 
+                  id="endDate" 
+                  formControlName="endDate" 
+                  type="date" 
+                  class="form-control" 
+                  required 
+                />
+              </div>
+
+              <div *ngIf="addEventForm.hasError('dateRange')" class="text-danger mt-2 small">
+                <span class="material-icons me-1">error</span> La date de début doit être antérieure à la date de fin.
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100 mt-4 shadow-sm" [disabled]="addEventForm.invalid || labelExists">
+                <span class="material-icons me-2">add_circle</span> Ajouter l'Événement
+              </button>
+            </form>
           </div>
-          <div class="mb-3">
-            <label for="startDate" class="form-label">Date de Début</label>
-            <input id="startDate" formControlName="startDate" type="date" class="form-control">
-            <div *ngIf="addEventForm.get('startDate')?.errors?.['pastDate']" class="text-danger">
-              La date de début ne peut pas être dans le passé.
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="endDate" class="form-label">Date de Fin</label>
-            <input id="endDate" formControlName="endDate" type="date" class="form-control">
-          </div>
-          <div *ngIf="addEventForm.hasError('dateRange')" class="text-danger">
-            La date de début doit être antérieure à la date de fin.
-          </div>
-          <button type="submit" class="btn btn-primary" [disabled]="addEventForm.invalid">Ajouter l'Événement</button>
-        </form>
+        </div>
       </div>
     </div>
   </div>

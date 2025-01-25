@@ -34,38 +34,36 @@ export class AddEventComponent implements OnInit {
   page: number = 0;
   size: number = 10;
 
+
   constructor(
     private fb: FormBuilder,
     private eventService: EventService,
-    private artistService: ArtistService,
     private router: Router
   ) {
-    this.addEventForm = this.fb.group(
-      {
-        label: ['', [Validators.required, Validators.minLength(3)]],
-        startDate: ['', [Validators.required, this.dateNotInPastValidator]],
-        endDate: ['', Validators.required],
-        artists: this.fb.array([]),
-      },
-      { validator: this.dateRangeValidator }
-    );
+    this.addEventForm = this.fb.group({
+      label: ['', [Validators.required, Validators.minLength(3)]],
+      startDate: ['', [Validators.required, this.dateNotInPastValidator]],
+      endDate: ['', Validators.required],
+      artists: this.fb.array([])
+    }, { validator: this.dateRangeValidator });
   }
 
   ngOnInit() {
-    this.addEventForm
-      .get('label')
-      ?.valueChanges.pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        switchMap((label) =>
-          label && label.length >= 3 ? this.checkLabelExists(label) : of(false)
-        )
-      )
-      .subscribe((exists) => {
-        console.log('Label exists:', exists);
-        this.labelExists = exists;
-      });
+    this.addEventForm.get('label')?.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(label => label && label.length >= 3 ? this.eventService.checkEventExists(label) : of(false))
+    ).subscribe(exists => {
+      this.labelExists = exists;
+      if (exists) {
+        this.addEventForm.get('label')?.setErrors({ 'exists': true });
+      } else {
+        this.addEventForm.get('label')?.setErrors(null);
+        this.addEventForm.get('label')?.updateValueAndValidity();
+      }
+    });
   }
+
 
   checkLabelExists(label: string): Observable<boolean> {
     return this.eventService.checkEventExists(label);
@@ -101,38 +99,38 @@ export class AddEventComponent implements OnInit {
             icon: 'success',
             title: 'Succès',
             text: 'Événement ajouté avec succès !',
-            confirmButtonText: 'OK',
+            confirmButtonText: 'OK'
           }).then(() => {
+            this.resetForm();
             this.router.navigate(['/events']);
           });
         },
         error: (err) => {
-          if (err.status === 409) {
-            Swal.fire({
-              icon: 'error',
-              title: 'Erreur',
-              text: 'Cet événement existe déjà.',
-              confirmButtonText: 'OK',
-            });
-          } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Erreur',
-              text: `Erreur : ${err.message}`,
-              confirmButtonText: 'OK',
-            });
-          }
-        },
+          Swal.fire({
+            icon: 'error',
+            title: 'Erreur',
+            text: err.status === 409 ? 'Cet événement existe déjà.' : `Erreur : ${err.message}`,
+            confirmButtonText: 'OK'
+          });
+        }
       });
     } else {
       Swal.fire({
         icon: 'warning',
         title: 'Attention',
-        text: 'Formulaire invalide.',
-        confirmButtonText: 'OK',
+        text: 'Formulaire invalide ou événement déjà existant.',
+        confirmButtonText: 'OK'
       });
     }
   }
 
+  resetForm() {
+    this.addEventForm.reset();
+    this.labelExists = false;
+    Object.keys(this.addEventForm.controls).forEach(key => {
+      const control = this.addEventForm.get(key);
+      control?.setErrors(null);
+    });
+  }
 
 }

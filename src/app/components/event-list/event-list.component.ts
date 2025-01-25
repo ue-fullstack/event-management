@@ -75,6 +75,7 @@ export class EventListComponent implements OnInit {
         this.eventService.deleteEvent(id).subscribe(
           () => {
             this.allEvents = this.allEvents.filter(event => event.id !== id);
+            this.loadEvents();
             Swal.fire({
               icon: 'success',
               title: 'Succès',
